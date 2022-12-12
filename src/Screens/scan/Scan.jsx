@@ -26,7 +26,7 @@ const Scan = ({ handleData }) => {
   }, [data]);
 
   useEffect(() => {
-    qrData.length != 0 && qrData.house_id.length === 9
+    qrData.house_id
       ? setIsDataValid(true)
       : setIsDataValid(false);
 
