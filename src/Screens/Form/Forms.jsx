@@ -16,11 +16,15 @@ const Forms = (props) => {
   const zone = props.mainData.zone;
   const area = props.mainData.area;
   const locality = props.mainData.location;
+  const latitude = props.mainData.lat;
+  const longitude = props.mainData.lng;
 
   const [questions, setQuestions] = useState([]);
   const [options, setOptions] = useState([]);
   const [marks, setMarks] = useState(0);
   const [answers, setAnswers] = useState({});
+  const [customerName, setCustomerName] = useState("");
+  const [mobileNo, setMobileNo] = useState(0);
 
   useEffect(() => {
     fetch("http://localhost:3000/api/read")
@@ -34,15 +38,37 @@ const Forms = (props) => {
       .then((e) => setOptions(e[0].body));
   }, []);
 
-
   useEffect(() => {
     console.log(answers);
   }, [answers]);
 
-  const handleOnSubmit = (e) => {
-    e.preventDefault()
-    console.log("Hooo gya");
-  }
+  const handleOnSubmit = async (e) => {
+    e.preventDefault();
+    const myData = {
+      house_id: houseId,
+      customer_name: customerName,
+      mobile_no: mobileNo ,
+      address: address,
+      zone: zone ,
+      area: area ,
+      location: locality,
+      latitude: latitude,
+      longitude: longitude,
+      feedback: "feedback",
+      qna: answers
+    };
+
+    const result = await fetch("http://localhost:3000/api/create" ,{
+    method: "POST" ,
+    headers: {
+      'Content-Type': "application/json"
+    } ,
+    body: JSON.stringify(myData)
+    })
+
+    const resultJSON = await result.json()
+    console.log(resultJSON);
+  };
 
   return (
     <div>
@@ -93,7 +119,18 @@ const Forms = (props) => {
             readOnly: true,
           }}
         />
-
+        <TextField
+          id="outlined-basic"
+          label="Customer Name"
+          variant="outlined"
+          onChange={(e) => setCustomerName(e.target.value)}
+        />
+        <TextField
+          id="outlined-basic"
+          label="Mobile Number"
+          variant="outlined"
+          onChange={(e) => setMobileNo(e.target.value)}
+        />
         {questions.map((item) => (
           <div className="questions_box" key={item.id}>
             <h3>
