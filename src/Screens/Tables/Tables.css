@@ -1,26 +1,7 @@
-.survey_form {
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     gap: 1rem;
-     padding-left: 1rem;
-     padding-right: 1rem;
-     padding-top: 1rem;
+.table_container{
+    padding-top: 10rem;
 }
 
-.survey_form_text {
-    width: 40%;
+.table {
+    
 }
-
-
-@media screen and (max-width: 600px) {
-    .survey_form_text {
-      width: 100%;
-    }
-  }
-
-  @media (min-width:600px) and (max-width:1024px) {
-    .survey_form_text {
-      width: 60%;
-    }
-  }

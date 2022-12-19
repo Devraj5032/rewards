@@ -34,7 +34,7 @@ const Scan = ({ handleData }) => {
   }, [qrData]);
 
   const handleOnClick = () => {
-    navigate("/tables");
+    navigate("/forms");
   };
 
   return (
