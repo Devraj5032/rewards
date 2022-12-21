@@ -22,6 +22,7 @@ const Forms = (props) => {
   const [answers, setAnswers] = useState([]);
   const [customerName, setCustomerName] = useState("");
   const [mobileNo, setMobileNo] = useState(0);
+  const [feedback , setFeedback] = useState("")
 
   useEffect(() => {
     fetch("http://localhost:3000/api/read")
@@ -35,34 +36,33 @@ const Forms = (props) => {
       .then((e) => setOptions(e[0].body));
   }, []);
 
-
-    console.log(answers);
+  console.log(answers);
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     const myData = {
       house_id: houseId,
       customer_name: customerName,
-      mobile_no: mobileNo ,
+      mobile_no: mobileNo,
       address: address,
-      zone: zone ,
-      area: area ,
+      zone: zone,
+      area: area,
       location: locality,
       latitude: latitude,
       longitude: longitude,
-      feedback: "feedback",
-      qna: answers
+      feedback: feedback,
+      qna: answers,
     };
 
-    const result = await fetch("http://localhost:3000/api/create" ,{
-    method: "POST" ,
-    headers: {
-      'Content-Type': "application/json"
-    } ,
-    body: JSON.stringify(myData)
-    })
+    const result = await fetch("http://localhost:3000/api/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(myData),
+    });
 
-    const resultJSON = await result.json()
+    const resultJSON = await result.json();
     console.log(resultJSON);
   };
 
@@ -134,7 +134,10 @@ const Forms = (props) => {
             <h3>
               {item.id}. {item.question}
             </h3>
-            <div className="questions_box_choices" dangerouslySetInnerHTML={{ __html:  item.choice}} />
+            <div
+              className="questions_box_choices"
+              dangerouslySetInnerHTML={{ __html: item.choice }}
+            />
             <FormControl>
               <FormLabel id="demo-radio-buttons-group-label">
                 Weitage/Score
@@ -161,7 +164,7 @@ const Forms = (props) => {
             </FormControl>
             <TextField
               id="outlined-read-only-input"
-              label=""
+              placeholder="Marks"
               value={answers[item.id]}
               InputProps={{
                 readOnly: true,
@@ -175,11 +178,16 @@ const Forms = (props) => {
             </Stack>
           </div>
         ))}
+        <div className="feedback_form">
+          <p>Feedback</p>
+          <textarea className="feedback_form_area" placeholder="Feedback" cols="40" rows="5" onChange={(e) => setFeedback(e.target.value)}></textarea>
+        </div>
+
         <Button variant="contained" type="submit">
           Submit
         </Button>
       </form>
-    </div >
+    </div>
   );
 };
 

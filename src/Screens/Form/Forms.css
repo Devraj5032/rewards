@@ -1,3 +1,4 @@
+
 .survey_form {
   display: flex;
   flex-direction: column;
@@ -34,6 +35,12 @@ padding-left: 10px;
  .questions_box {
    width: 100%;
  }
+}
+
+.feedback_form_area{
+  border: 1px solid #c3cbd9;
+  border-radius: 10px;
+  
 }
 
 @media (min-width:600px) and (max-width:1024px) {
