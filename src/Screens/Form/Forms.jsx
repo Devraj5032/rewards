@@ -6,6 +6,10 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import { useNavigate } from "react-router-dom";
 
 const Forms = (props) => {
   const houseId = props.mainData.house_id;
@@ -23,6 +27,8 @@ const Forms = (props) => {
   const [customerName, setCustomerName] = useState("");
   const [mobileNo, setMobileNo] = useState(0);
   const [feedback , setFeedback] = useState("")
+
+  let navigate = useNavigate();
 
   useEffect(() => {
     fetch("http://localhost:3000/api/read")
@@ -52,8 +58,9 @@ const Forms = (props) => {
       longitude: longitude,
       feedback: feedback,
       qna: answers,
+      
     };
-
+    
     const result = await fetch("http://localhost:3000/api/create", {
       method: "POST",
       headers: {
@@ -61,9 +68,10 @@ const Forms = (props) => {
       },
       body: JSON.stringify(myData),
     });
-
+    
     const resultJSON = await result.json();
     console.log(resultJSON);
+    navigate("/");
   };
 
   return (
@@ -138,7 +146,7 @@ const Forms = (props) => {
               className="questions_box_choices"
               dangerouslySetInnerHTML={{ __html: item.choice }}
             />
-            <FormControl>
+            {/* <FormControl>
               <FormLabel id="demo-radio-buttons-group-label">
                 Weitage/Score
               </FormLabel>
@@ -161,7 +169,25 @@ const Forms = (props) => {
                   </label>
                 </div>
               ))}
-            </FormControl>
+            </FormControl> */}
+             <FormControl>
+      <FormLabel id="demo-controlled-radio-buttons-group">Weitage/Score</FormLabel>
+      <RadioGroup
+        aria-labelledby="demo-controlled-radio-buttons-group"
+        name="controlled-radio-buttons-group"
+       // value={value}
+        onChange={(x) =>
+          setAnswers((answer) => ({
+            ...answer,
+            [item.id]: x.target.value,
+          }))
+        }
+      >
+         {options.map((e) => (
+        <FormControlLabel value={e.marks} control={<Radio />} label={e.label} />
+        ))}
+      </RadioGroup>
+    </FormControl>
             <TextField
               id="outlined-read-only-input"
               placeholder="Marks"
