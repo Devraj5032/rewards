@@ -161,8 +161,8 @@ const Forms = (props) => {
             </FormControl>
             <TextField
               id="outlined-read-only-input"
-              label="Marks"
-              value={marks}
+              label=""
+              value={answers[item.id]}
               InputProps={{
                 readOnly: true,
               }}
