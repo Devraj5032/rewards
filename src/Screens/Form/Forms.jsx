@@ -2,9 +2,6 @@ import React, { useEffect, useLayoutEffect, useState } from "react";
 import Heading from "../Components/Heading";
 import TextField from "@mui/material/TextField";
 import "./Forms.css";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import Button from "@mui/material/Button";
@@ -22,7 +19,7 @@ const Forms = (props) => {
   const [questions, setQuestions] = useState([]);
   const [options, setOptions] = useState([]);
   const [marks, setMarks] = useState(0);
-  const [answers, setAnswers] = useState({});
+  const [answers, setAnswers] = useState([]);
   const [customerName, setCustomerName] = useState("");
   const [mobileNo, setMobileNo] = useState(0);
 
@@ -38,9 +35,8 @@ const Forms = (props) => {
       .then((e) => setOptions(e[0].body));
   }, []);
 
-  useEffect(() => {
+
     console.log(answers);
-  }, [answers]);
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
@@ -123,12 +119,14 @@ const Forms = (props) => {
           id="outlined-basic"
           label="Customer Name"
           variant="outlined"
+          className="survey_form_text"
           onChange={(e) => setCustomerName(e.target.value)}
         />
         <TextField
           id="outlined-basic"
           label="Mobile Number"
           variant="outlined"
+          className="survey_form_text"
           onChange={(e) => setMobileNo(e.target.value)}
         />
         {questions.map((item) => (
@@ -136,7 +134,7 @@ const Forms = (props) => {
             <h3>
               {item.id}. {item.question}
             </h3>
-            {item.choice}
+            <div className="questions_box_choices" dangerouslySetInnerHTML={{ __html:  item.choice}} />
             <FormControl>
               <FormLabel id="demo-radio-buttons-group-label">
                 Weitage/Score
@@ -147,7 +145,7 @@ const Forms = (props) => {
                     <input
                       type="radio"
                       value={e.marks}
-                      name={e.id}
+                      // name={e.id}
                       key={e.id}
                       onChange={() =>
                         setAnswers((answer) => ({
@@ -181,7 +179,7 @@ const Forms = (props) => {
           Submit
         </Button>
       </form>
-    </div>
+    </div >
   );
 };
 
